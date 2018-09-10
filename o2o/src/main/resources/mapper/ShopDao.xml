@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.test.o2o.dao.ShopDao">
+    <!-- useGeneratedKeys：一旦添加成功，通过jdbc获取主键的值，并传入实体类中 keyColumn表中主键绑定实体类字段keyProperty-->
+    <insert id="insertShop" useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
+        INSERT INTO
+        tb_shop(owner_id,area_id,shop_category_id,shop_name,shop_desc,shop_addr,phone,shop_img,priority,create_time,
+        last_edit_time,enable_status,advice)
+        VALUES
+        (#{owner.userId},#{area.areaId},#{shopCategory.shopCategoryId},#{shopName},#{shopDesc},#{shopAddr},
+        #{phone},#{shopImg},#{priority},#{createTime},#{lastEditTime},#{enableStatus},#{advice})
+    </insert>
+
+    <!-- 更新店铺-->
+    <update id="updateShop" parameterType="org.test.o2o.entity.Shop">
+        UPDATE tb_shop
+        <set>
+            <if test="shopName != null">shop_name=#{shopName},</if>
+            <if test="shopDesc != null">shop_desc=#{shopDesc},</if>
+            <if test="shopAddr != null">shop_addr=#{shopAddr},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="shopImg != null">shop_img=#{shopImg},</if>
+            <if test="priority != null">priority=#{priority},</if>
+            <if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
+            <if test="enableStatus != null">enable_status=#{enableStatus},</if>
+            <if test="advice != null">advice=#{advice},</if>
+            <if test="area != null">shop_name=#{area.areaId},</if>
+            <if test="shopCategory != null">shop_name=#{shopCategory.shopCategoryId}</if>
+        </set>
+        WHERE shop_id=#{shopId}
+    </update>
+</mapper>
