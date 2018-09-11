@@ -1,0 +1,179 @@
+/**
+ * Copyright (C), 2015-2018, XXX有限公司
+ * FileName: ShopManagementController
+ * Author: Administrator
+ * Date: 2018-09-11 13:23
+ * Description: 店铺Controller
+ * History:
+ * <author>      <time>      <version>   <desc>
+ * <p>
+ * 作者姓名      修改时间       版本号      描述
+ */
+
+
+package org.test.o2o.web.shopadmin;
+
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.test.o2o.dto.ShopExecution;
+import org.test.o2o.entity.PersonInfo;
+import org.test.o2o.entity.Shop;
+import org.test.o2o.enums.ShopStateEnum;
+import org.test.o2o.exceptions.ShopOperationException;
+import org.test.o2o.service.ShopService;
+import org.test.o2o.util.HttpServletRequestUtil;
+import org.test.o2o.util.ImageUtil;
+import org.test.o2o.util.PathUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+
+ * 〈功能简述〉<br>
+
+ * 〈店铺Controller〉
+
+ *
+
+ * @author Administrator
+
+ * @create 2018-09-11
+
+ * @since 1.0.0
+
+ */
+@Controller
+@RequestMapping("/shopadmin")
+public class ShopManagementController {
+    @Autowired
+    private ShopService shopService;
+
+    @RequestMapping(value = "/registershop", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> registerShop(HttpServletRequest request) {
+
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        //1.接收并转化相应的参数，包括店铺信息及图片信息
+        /*
+        表单提交的json转化通过json-databind
+         */
+        String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
+        ObjectMapper mapper = new ObjectMapper();
+        Shop shop = null;
+        try {
+            shop = mapper.readValue(shopStr, Shop.class);
+        } catch (Exception e) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage());
+            return modelMap;
+        }
+
+        //处理图片
+        CommonsMultipartFile shopImg = null;
+        //文件上传解析器CommonsMultipartResolver通过session获取上传文件内容
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(
+                request.getSession().getServletContext());
+        //是否有上传的流对象
+        if (commonsMultipartResolver.isMultipart(request)) {
+            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+            //提取相对应的文件流
+            shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
+
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "上传图片不能为空");
+            return modelMap;
+        }
+
+        //2.注册店铺
+        if (shop!=null && shopImg!=null) {
+            PersonInfo owner = new PersonInfo();
+            //Session TODO
+            owner.setUserId(1L);
+            shop.setOwner(owner);
+
+            ////CommonsMultipartFile转换成File，路径随便传一个即可
+            //File shopImgFile = new File(PathUtil.getImgBasePath() + ImageUtil.getRandomFileName());
+            //try {
+            //    shopImgFile.createNewFile();
+            //} catch (IOException e) {
+            //    modelMap.put("success", false);
+            //    modelMap.put("errMsg", e.getMessage());
+            //    return modelMap;
+            //}
+            //
+            //try {
+            //    inputStreamToFile(shopImg.getInputStream(), shopImgFile);
+            //} catch (IOException e) {
+            //    modelMap.put("success", false);
+            //    modelMap.put("errMsg", e.getMessage());
+            //    return modelMap;
+            //}
+
+            ShopExecution se= null;
+            try {
+                se = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                if (se.getState() == ShopStateEnum.CHECK.getState()) {
+                    modelMap.put("success", true);
+                } else {
+                    modelMap.put("success", false);
+                    modelMap.put("errMsg", se.getStateInfo());
+                }
+            } catch (ShopOperationException e) {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", e.getMessage());
+            } catch (IOException e) {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", e.getMessage());
+            }
+            return modelMap;
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "请输入店铺信息");
+            return modelMap;
+        }
+
+        //3.返回结果
+    }
+
+    ///*
+    //由于addShop接收图片使用的是file对象，所以需要将上传的MultipartFile转换成file对象，通过其getInputStream可以实现
+    // */
+    //private static void inputStreamToFile(InputStream inputStream, File file) {
+    //    FileOutputStream outputStream = null;
+    //    try {
+    //        outputStream = new FileOutputStream(file);
+    //        int len = 0;
+    //        byte[] buffer = new byte[1024];
+    //        while ((len = inputStream.read(buffer)) != -1) {
+    //            outputStream.write(buffer, 0 , len);
+    //        }
+    //    } catch (Exception e) {
+    //        throw new RuntimeException("调用InputStreamToFile产生异常" + e.getMessage());
+    //    } finally {
+    //        try {
+    //            if (outputStream != null) {
+    //                outputStream.close();
+    //            }
+    //            if (inputStream != null) {
+    //                inputStream.close();
+    //            }
+    //        } catch (IOException e) {
+    //            throw new RuntimeException("调用InputStreamToFile关闭io产生异常" + e.getMessage());
+    //        }
+    //    }
+    //}
+
+}

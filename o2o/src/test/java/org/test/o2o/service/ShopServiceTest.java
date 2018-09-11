@@ -15,6 +15,7 @@ package org.test.o2o.service;
 
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
@@ -55,6 +56,7 @@ public class ShopServiceTest extends BaseTest {
     private ShopService shopService;
 
     @Test
+    @Ignore
     public void testAddShop() throws IOException {
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();
@@ -67,29 +69,31 @@ public class ShopServiceTest extends BaseTest {
         shop.setOwner(owner);
         shop.setArea(area);
         shop.setShopCategory(shopCategory);
-        shop.setShopName("测试的店铺1");
-        shop.setShopDesc("test1");
-        shop.setShopAddr("test1");
-        shop.setPhone("test1");
+        shop.setShopName("测试的店铺3");
+        shop.setShopDesc("test3");
+        shop.setShopAddr("test3");
+        shop.setPhone("test3");
         shop.setCreateTime(new Date());
         shop.setEnableStatus(ShopStateEnum.CHECK.getState());
         shop.setAdvice("审核中");
-        String shopImg = "D:\\test1.jpg";
 
-        ShopExecution se = shopService.addShop(shop, path2MultipartFile(shopImg));
+        File shopImg = new File("D:\\test1.jpg");
+        InputStream inputStream = new FileInputStream(shopImg);
+
+        ShopExecution se = shopService.addShop(shop, inputStream, shopImg.getName());
         assertEquals(ShopStateEnum.CHECK.getState(), se.getState());
     }
 
-    /*
-    文件流转换为上传流 MultipartFile
-     */
-    private MultipartFile path2MultipartFile(String filePath) throws IOException {
-        File file = new File(filePath);
-        FileInputStream input = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain",
-                IOUtils.toByteArray(input));
-        return multipartFile;
-    }
+    ///*
+    //文件流转换为上传流 MultipartFile
+    // */
+    //private MultipartFile path2MultipartFile(String filePath) throws IOException {
+    //    File file = new File(filePath);
+    //    FileInputStream input = new FileInputStream(file);
+    //    MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain",
+    //            IOUtils.toByteArray(input));
+    //    return multipartFile;
+    //}
 
 
 }
