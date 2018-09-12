@@ -28,6 +28,15 @@
         <!-- 配置jsp路径的后缀 -->
         <property name="suffix" value=".html"/>
     </bean>
+    <!--文件上传解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--文件编码-->
+        <property name="defaultEncoding" value="utf-8"/>
+        <!--上传的最大尺寸 单位字节 设置为20M 1024*1024*20-->
+        <property name="maxUploadSize" value="20971520"/>
+        <!--上传的最大内存-->
+        <property name="maxInMemorySize" value="20971520"/>
+    </bean>
 
     <!--4.扫描web相关的bean-->
     <context:component-scan base-package="org.test.o2o.web"/>

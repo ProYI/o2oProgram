@@ -74,9 +74,7 @@ public class ImageUtil {
         File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
         logger.debug("current complete addr is:"+PathUtil.getImgBasePath()+relativeAddr);
         try {
-            Thumbnails.of(thumbnailInputStream).size(200, 200)
-                    .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.png")), 0.25f)
-                    .outputQuality(0.8f).toFile(dest);
+            Thumbnails.of(thumbnailInputStream).size(200, 200).watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "watermark.png")), 0.25f).outputQuality(0.8f).toFile(dest);
         } catch (IOException e) {
             throw new RuntimeException("创建缩略图失败：" + e.toString());
         }
