@@ -15,6 +15,8 @@ package org.test.o2o.dao;
 
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.test.o2o.BaseTest;
 import org.test.o2o.entity.Area;

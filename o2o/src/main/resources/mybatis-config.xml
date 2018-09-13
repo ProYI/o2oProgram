@@ -11,13 +11,10 @@
         <setting name="useColumnLabel" value="true"/>
         <!--开启驼峰命名转换：Table（create_time） -> Entity{createTime}-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
-
-
-
-
-
-
-
-
     </settings>
+    
+    <!-- mysql主从分离配置 -->
+    <plugins>
+        <plugin interceptor="org.test.o2o.dao.split.DynamicDataSourceInterceptor"/>
+    </plugins>
 </configuration>
