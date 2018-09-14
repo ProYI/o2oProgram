@@ -52,6 +52,7 @@ public class ShopServiceImpl implements ShopService {
     @Autowired
     private ShopDao shopDao;
 
+    //注册店铺信息，包括图片处理
     @Transactional
     public ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) {
         //空值判断
@@ -88,6 +89,45 @@ public class ShopServiceImpl implements ShopService {
             throw new ShopOperationException("addShop error:" + e.getMessage());
         }
         return new ShopExecution(ShopStateEnum.CHECK, shop);
+    }
+
+    //通过店铺Id获取店铺信息
+    @Override
+    public Shop getByShopId(long shopId) {
+        return shopDao.queryByShopId(shopId);
+    }
+
+    //更新店铺信息，包括对图片的处理
+    @Override
+    public ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+        if (shop==null || shop.getShopId()==null) {
+            return new ShopExecution(ShopStateEnum.NULL_SHOP);
+        } else {
+            try {
+                //1.判断是否需要处理图片
+                if (shopImgInputStream != null && fileName!=null && !"".equals(fileName)) {
+                    //先将原始图片删除
+                    Shop tempShop = shopDao.queryByShopId(shop.getShopId());
+                    if (tempShop.getShopImg() != null) {
+                        ImageUtil.deleteFileOrPath(tempShop.getShopImg());
+                    }
+
+                    //生成新图片
+                    addShopImg(shop, shopImgInputStream, fileName);
+                }
+                //2.更新店铺信息
+                shop.setLastEditTime(new Date());
+                int effectedNum = shopDao.updateShop(shop);
+                if (effectedNum <= 0) {
+                    return new ShopExecution(ShopStateEnum.INNER_ERROR);
+                } else {
+                    shop = shopDao.queryByShopId(shop.getShopId());
+                    return new ShopExecution(ShopStateEnum.SUCCESS, shop);
+                }
+            } catch (Exception e) {
+                throw new ShopOperationException("modifyShop error:" + e.getMessage());
+            }
+        }
     }
 
     private void addShopImg(Shop shop, InputStream shopImgInputStream, String fileName) {

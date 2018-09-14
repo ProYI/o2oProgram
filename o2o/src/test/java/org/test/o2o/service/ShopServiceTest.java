@@ -28,6 +28,7 @@ import org.test.o2o.entity.PersonInfo;
 import org.test.o2o.entity.Shop;
 import org.test.o2o.entity.ShopCategory;
 import org.test.o2o.enums.ShopStateEnum;
+import org.test.o2o.exceptions.ShopOperationException;
 
 import java.io.*;
 import java.util.Date;
@@ -95,5 +96,15 @@ public class ShopServiceTest extends BaseTest {
     //    return multipartFile;
     //}
 
+    @Test
+    public void testModifyShop() throws ShopOperationException, FileNotFoundException {
+        Shop shop = new Shop();
+        shop.setShopId(1L);
+        shop.setShopName("修改后的店铺名称");
+        File shopImg = new File("D:\\1.jpg");
+        InputStream inputStream = new FileInputStream(shopImg);
+        ShopExecution shopExecution = shopService.modifyShop(shop, inputStream, "1.jpg");
+        System.out.println(shopExecution.getShop().getShopImg());
+    }
 
 }

@@ -23,4 +23,14 @@ public interface ShopDao {
     * @Date: 2018-09-10 10:54
     */
     int updateShop(Shop shop);
+
+    /**
+    * 功能描述:
+    *〈通过shop id查询店铺〉
+    * @param:shopId
+    * @return:Shop
+    * @since: 1.0.0
+    * @Date: 2018-09-14 12:40
+    */
+    Shop queryByShopId(long shopId);
 }

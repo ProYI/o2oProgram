@@ -95,6 +95,8 @@ public class ImageUtil {
     /*
     删除文件或目录下文件
     @param storePath:文件路径或者目录路径
+    storePath是文件路径则删除该文件
+    storePath是目录路径则删除该目录下所有文件
      */
     public static void deleteFileOrPath(String storePath) {
         File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
