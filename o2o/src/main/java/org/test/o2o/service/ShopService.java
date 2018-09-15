@@ -4,7 +4,6 @@ import org.test.o2o.dto.ShopExecution;
 import org.test.o2o.entity.Shop;
 import org.test.o2o.exceptions.ShopOperationException;
 
-import java.io.File;
 import java.io.InputStream;
 
 public interface ShopService {
@@ -16,4 +15,7 @@ public interface ShopService {
 
     //更新店铺信息，包括对图片的处理
     ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+
+    //根据shopCondition分页返回相应店铺列表数据
+    ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize);
 }

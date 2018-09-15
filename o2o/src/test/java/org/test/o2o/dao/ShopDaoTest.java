@@ -17,6 +17,7 @@ package org.test.o2o.dao;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.test.o2o.BaseTest;
 import org.test.o2o.entity.Area;
 import org.test.o2o.entity.PersonInfo;
@@ -24,6 +25,7 @@ import org.test.o2o.entity.Shop;
 import org.test.o2o.entity.ShopCategory;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -89,10 +91,30 @@ public class ShopDaoTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testQueryByShopId() {
         long shopId = 1;
         Shop shop = shopDao.queryByShopId(shopId);
         System.out.println(shop.getArea().getAreaId());
         System.out.println(shop.getArea().getAreaName());
+    }
+
+    @Test
+    public void testQueryShopList() {
+        Shop shopCondition = new Shop();
+        PersonInfo owner = new PersonInfo();
+        owner.setUserId(1L);
+        shopCondition.setOwner(owner);
+        List<Shop> shopList = shopDao.queryShopList(shopCondition, 0, 5);
+        int count = shopDao.queryShopCount(shopCondition);
+        System.out.println("店铺列表的大小：" + shopList.size());
+        System.out.println("店铺总数" + count);
+        ShopCategory shopCategory = new ShopCategory();
+        shopCategory.setShopCategoryId(2L);
+        shopCondition.setShopCategory(shopCategory);
+        shopList = shopDao.queryShopList(shopCondition, 0, 2);
+        count = shopDao.queryShopCount(shopCondition);
+        System.out.println("带店铺类别店铺列表的大小：" + shopList.size());
+        System.out.println("带店铺类别店铺总数" + count);
     }
 }

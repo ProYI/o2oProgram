@@ -32,6 +32,7 @@ import org.test.o2o.exceptions.ShopOperationException;
 
 import java.io.*;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -106,6 +107,17 @@ public class ShopServiceTest extends BaseTest {
         InputStream inputStream = new FileInputStream(shopImg);
         ShopExecution shopExecution = shopService.modifyShop(shop, inputStream, "1.jpg");
         System.out.println(shopExecution.getShop().getShopImg());
+    }
+
+    @Test
+    public void testGetShopList() {
+        Shop shopCondition = new Shop();
+        ShopCategory shopCategory = new ShopCategory();
+        shopCategory.setShopCategoryId(2L);
+        shopCondition.setShopCategory(shopCategory);
+        ShopExecution shopExecution = shopService.getShopList(shopCondition, 2, 3);
+        System.out.println("店铺列表数为：" + shopExecution.getShopList().size());
+        System.out.println("店铺总数" + shopExecution.getCount());
     }
 
 }
