@@ -7,8 +7,8 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 if (data.success) {
-                    handleUser(data.shopList);
-                    handleList(data.user);
+                    handleUser(data.user);
+                    handleList(data.shopList);
                 }
             }
         });
@@ -38,7 +38,7 @@ $(function () {
 
     function goShop(status, id) {
         if (status == 1) {
-            return "<a href='/o2o/shop/shopmanage?shopId=" + id + "'>进入</a>";
+            return "<a href='/o2o/shopadmin/shopmanagement?shopId=" + id + "'>进入</a>";
         } else {
             return "";
         }
