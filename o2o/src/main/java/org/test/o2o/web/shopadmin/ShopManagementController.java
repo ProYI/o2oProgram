@@ -16,6 +16,7 @@ package org.test.o2o.web.shopadmin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -70,6 +71,56 @@ public class ShopManagementController {
     @Autowired
     private AreaService areaService;
 
+    //判断是否登录的操作，是否违规
+    @RequestMapping(value = "/getshopmanagementinfo", method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String, Object> getShopManagementInfo(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        long shopId = HttpServletRequestUtil.getLong(request, "shopId");
+        //前端没有传shopId，可以通过session获取
+        if (shopId <= 0) {
+            Object currentShopObj = request.getSession().getAttribute("currentShop");
+            if (currentShopObj == null) {
+                modelMap.put("redirect", true);
+                modelMap.put("url", "/o2o/shop/shoplist");
+            } else {
+                Shop currentShop = (Shop) currentShopObj;
+                modelMap.put("redirect", false);
+                modelMap.put("shopId", currentShop.getShopId());
+            }
+        } else {
+            Shop currentShop = new Shop();
+            currentShop.setShopId(shopId);
+            request.getSession().setAttribute("currentShop", currentShop);
+            modelMap.put("redirect", false);
+        }
+        return modelMap;
+    }
+
+    //获取店铺列表功能
+    @RequestMapping(value = "/getshoplist", method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String, Object> getShopList(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        PersonInfo user = new PersonInfo();
+        user.setUserId(1L);
+        user.setName("test");
+        request.getSession().setAttribute("user", user);
+        user = (PersonInfo) request.getSession().getAttribute("user");
+        try {
+            Shop shopCondition = new Shop();
+            shopCondition.setOwner(user);
+            ShopExecution shopExecution = shopService.getShopList(shopCondition, 0, 100);
+            modelMap.put("shopList", shopExecution.getShopList());
+            modelMap.put("user", user);
+            modelMap.put("success", true);
+        } catch (Exception e) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage());
+        }
+        return modelMap;
+    }
+    //注册功能
     @RequestMapping(value = "/registershop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> registerShop(HttpServletRequest request) {
