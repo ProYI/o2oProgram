@@ -27,10 +27,20 @@ $(function () {
             });
     }
 
+    /*批量添加时拼接列表
+    * 通过class=row row-product-category temp和row row-product-category now进行区别
+    * */
+    $("#new").click(
+        function () {
+            var tempHtml = "<div class='row row-product-category temp'><div class='col-33'><input class='category-input category' type='text' placeholder='分类名'></div><div class='col-33'><input class='category-input priority' type='number' placeholder='优先级'></div><div class='col-33'><a href='#' class='button delete'>删除</a></div></div>";
+            $(".category-wrap").append(tempHtml);
+        });
+
+    /*提交时只需要提交temp标识的新增行数*/
     $("#submit").click(function () {
         var tempArr = $(".temp");
         var productCategoryList = [];
-        tempArr.map(function (item, index) {
+        tempArr.map(function (index, item) {
             var tempObj = {};
             tempObj.productCategoryName = $(item).find(".category").val();
             tempObj.priority = $(item).find(".priority").val();
@@ -54,13 +64,10 @@ $(function () {
         });
     });
 
-    $("#new").click(
-        function () {
-            var tempHtml = "<div class='row row-product-category temp'><div class='col-33'><input class='category-input category' type='text' placeholder='分类名'></div><div class='col-33'><input class='category-input priority' type='number' placeholder='优先级'></div><div class='col-33'><a href='#' class='button delete'>删除</a></div></div>";
-            $(".category-wrap").append(tempHtml);
-        });
-
-
+    /*删除类别时
+    now是从数据库中取出的数据，需要从后台删除
+    temp还没有添加到后台，就只需要在前台删除即可
+    */
     $(".category-wrap").on("click", ".row-product-category.now .delete",
         function (e) {
             var target = e.currentTarget;
