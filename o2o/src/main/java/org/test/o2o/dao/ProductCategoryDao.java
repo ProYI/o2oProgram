@@ -14,4 +14,6 @@ public interface ProductCategoryDao {
     * @Date: 2018-09-16 11:40
     */
     List<ProductCategory> queryProductCategoryList(long shopId);
+    
+    int batchInsertProductCategory(List<ProductCategory> productCategoryList);
 }
