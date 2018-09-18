@@ -22,6 +22,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.test.o2o.BaseTest;
+import org.test.o2o.dto.ImageHolder;
 import org.test.o2o.dto.ShopExecution;
 import org.test.o2o.entity.Area;
 import org.test.o2o.entity.PersonInfo;
@@ -82,7 +83,8 @@ public class ShopServiceTest extends BaseTest {
         File shopImg = new File("D:\\test1.jpg");
         InputStream inputStream = new FileInputStream(shopImg);
 
-        ShopExecution se = shopService.addShop(shop, inputStream, shopImg.getName());
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(), inputStream);
+        ShopExecution se = shopService.addShop(shop, imageHolder);
         assertEquals(ShopStateEnum.CHECK.getState(), se.getState());
     }
 
@@ -105,7 +107,9 @@ public class ShopServiceTest extends BaseTest {
         shop.setShopName("修改后的店铺名称");
         File shopImg = new File("D:\\1.jpg");
         InputStream inputStream = new FileInputStream(shopImg);
-        ShopExecution shopExecution = shopService.modifyShop(shop, inputStream, "1.jpg");
+
+        ImageHolder imageHolder = new ImageHolder("1.jpg", inputStream);
+        ShopExecution shopExecution = shopService.modifyShop(shop, imageHolder);
         System.out.println(shopExecution.getShop().getShopImg());
     }
 
