@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
  * 〈功能简述〉<br>
 
- * 〈〉
+ * 〈视图解析器：解析路由并转发到相应的html中〉
 
  *
 
@@ -38,21 +38,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ShopAdminController {
     @RequestMapping(value = "shopopreation")
     public String shopOperation() {
+        //转发至店铺注册/编辑页面
         return "/shop/shopoperation";
     }
 
     @RequestMapping(value = "/shoplist")
     public String shopList() {
+        //转发至店铺列表页面
         return "/shop/shoplist";
     }
 
     @RequestMapping(value = "/shopmanagement")
     public String shopManagement() {
+        //转发至店铺管理页面
         return "/shop/shopmanagement";
     }
 
     @RequestMapping(value = "/productcategorymanagement")
     public String productCategoryManagement() {
+        //转发至商品类别管理页面
         return "/shop/productcategorymanagement";
+    }
+
+    @RequestMapping(value = "/productoperation")
+    public String productOperation() {
+        //转发至商品添加/编辑页面
+        return "/shop/productoperation";
     }
 }
