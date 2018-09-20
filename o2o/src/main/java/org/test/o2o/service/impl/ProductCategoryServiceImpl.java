@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.o2o.dao.ProductCategoryDao;
+import org.test.o2o.dao.ProductDao;
 import org.test.o2o.dto.ProductCategoryExecution;
 import org.test.o2o.entity.ProductCategory;
 import org.test.o2o.enums.ProductCategoryStateEnum;
@@ -45,6 +46,8 @@ import java.util.List;
 public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Autowired
     private ProductCategoryDao productCategoryDao;
+    @Autowired
+    private ProductDao productDao;
 
     //查询指定某个店铺下的所有商品类别信息
     @Override
@@ -75,7 +78,15 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     @Transactional
     public ProductCategoryExecution deleteProductCategory(long productCategoryId, long shopId) throws ProductCategoryOperationException {
-        //TODO 将此商品类别下的商品的类别Id置为空
+        //将此商品类别下的商品的类别Id置为空 解除tb_product里的商品与该productcategoryId的关联
+        try {
+            int effectedNum = productDao.updateProductCategoryToNull(productCategoryId);
+            if(effectedNum <= 0){
+                throw new ProductCategoryOperationException("店铺类别更新失败");
+            }
+        }catch (Exception e){
+            throw new ProductCategoryOperationException("deleteProductCategory error:"+e.getMessage());
+        }
 
         //删除productCategory
         try{

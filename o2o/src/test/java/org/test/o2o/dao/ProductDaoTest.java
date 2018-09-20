@@ -14,6 +14,7 @@
 package org.test.o2o.dao;
 
 
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -103,8 +104,25 @@ public class ProductDaoTest extends BaseTest{
     }
 
     @Test
+    public void testBQueryProductList() throws Exception {
+        Product product = new Product();
+        //分页查询,预期返回三条结果
+        List<Product> productList = productDao.queryProductList(product, 0, 3);
+        Assert.assertEquals(3, productList.size());
+        int count = productDao.queryProductCount(product);
+        Assert.assertEquals(7, count);
+        //查询名称为测试的商品总数
+        //使用商品名称模糊查询,预期返回两条结果
+        product.setProductName("测试");
+        productList = productDao.queryProductList(product, 0, 3);
+        Assert.assertEquals(3, productList.size());
+        count = productDao.queryProductCount(product);
+        Assert.assertEquals(5, count);
+    }
+
+    @Test
     @Ignore
-    public void testBQueryProductByProductId() throws Exception {
+    public void testCQueryProductByProductId() throws Exception {
         long productId = 1;
         //初始化两个商品详情图实例作为productId为1的商品下的详情图片
         //批量插入到商品详情列表中
@@ -134,7 +152,7 @@ public class ProductDaoTest extends BaseTest{
 
     @Test
     @Ignore
-    public void testCUpdateProduct() throws Exception {
+    public void testDUpdateProduct() throws Exception {
         Product product = new Product();
         ProductCategory pc = new ProductCategory();
         Shop shop = new Shop();
@@ -148,5 +166,13 @@ public class ProductDaoTest extends BaseTest{
         //以及商品类别并校验影响的行数是否为1
         int effectedNum = productDao.updateProduct(product);
         System.out.println(effectedNum);
+    }
+
+    @Test
+    @Ignore
+    public void testEDeleteShopAuthMap() throws Exception {
+        //将productCategoryId为2的商品类别下面的商品的商品类别设置为空
+        int effectedNum = productDao.updateProductCategoryToNull(9L);
+        Assert.assertEquals(1, effectedNum);
     }
 }

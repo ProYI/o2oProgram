@@ -27,6 +27,7 @@ import org.test.o2o.enums.ProductStateEnum;
 import org.test.o2o.exceptions.ProductOperationException;
 import org.test.o2o.service.ProductService;
 import org.test.o2o.util.ImageUtil;
+import org.test.o2o.util.PageCalculator;
 import org.test.o2o.util.PathUtil;
 
 import java.util.ArrayList;
@@ -151,6 +152,27 @@ public class ProductServiceImpl implements ProductService{
         } else {
             return new ProductExecution(ProductStateEnum.EMPTY);
         }
+    }
+
+    /**
+    * 功能描述:
+    *〈查询商品列表并分页〉
+    * @param: productCondition
+    * @param: pageIndex
+    * @param: pageSize
+    * @return:
+    */
+    @Override
+    public ProductExecution getProductList(Product productCondition, int pageIndex, int pageSize) {
+        //页面转换成数据库的行码,并调用doa层取回指定页码的商品列表
+        int rowIndex = PageCalculator.calculateRowIndex(pageIndex, pageSize);
+        List<Product> productList = productDao.queryProductList(productCondition, rowIndex, pageSize);
+        //基于同样的查询条件返回该查询条件下的商品总数
+        int count = productDao.queryProductCount(productCondition);
+        ProductExecution pe = new ProductExecution();
+        pe.setProductList(productList);
+        pe.setCount(count);
+        return pe;
     }
 
     /**
