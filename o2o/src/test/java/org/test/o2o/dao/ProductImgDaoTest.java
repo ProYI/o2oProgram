@@ -69,4 +69,13 @@ public class ProductImgDaoTest extends BaseTest{
         int effectedNum=productImgDao.batchInsertProductImg(productImgList);
         System.out.println(effectedNum);
     }
+
+    @Test
+    @Ignore
+    public void testBDeleteProductImgByProductId() throws Exception{
+        //删除新增的两条商品详情图片记录
+        long productId=1;
+        int effectedNum=productImgDao.deleteProductImgByProductId(productId);
+        System.out.println(effectedNum);
+    }
 }
