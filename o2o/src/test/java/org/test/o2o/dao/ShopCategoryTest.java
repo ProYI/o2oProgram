@@ -48,7 +48,7 @@ public class ShopCategoryTest extends BaseTest {
     @Ignore
     public void testQueryShopCategory() {
         List<ShopCategory> shopCategoryList = shopCategoryDao.queryShopCategory(new ShopCategory());
-        assertEquals(2, shopCategoryList.size());
+        assertEquals(1, shopCategoryList.size());
 
         //测试子类别
         ShopCategory testCategory = new ShopCategory();
@@ -58,5 +58,8 @@ public class ShopCategoryTest extends BaseTest {
         shopCategoryList = shopCategoryDao.queryShopCategory(testCategory);
         assertEquals(1, shopCategoryList.size());
         System.out.println(shopCategoryList.get(0).getShopCategoryName());
+
+        shopCategoryList = shopCategoryDao.queryShopCategory(null);
+        assertEquals(1, shopCategoryList.size());
     }
 }

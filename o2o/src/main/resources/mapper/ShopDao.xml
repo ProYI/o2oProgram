@@ -103,6 +103,9 @@
             <if test="shopCondition.shopCategory!=null and shopCondition.shopCategory.shopCategoryId!=null">
                 and s.shop_category_id=#{shopCondition.shopCategory.shopCategoryId}
             </if>
+            <if test="shopCondition.shopCategory!=null and shopCondition.shopCategory.parent!=null and shopCondition.shopCategory.shopCategoryId!=null">
+                AND s.shop_category_id IN (SELECT shop_category_id FROM tb_shop_category WHERE parent_id=#{shopCondition.shopCategory.parent.shopCategoryId})
+            </if>
             <if test="shopCondition.area!=null and shopCondition.area.areaId!=null">
                 and s.area_id=#{shopCondition.area.areaId}
             </if>
@@ -110,7 +113,7 @@
                 and s.shop_name LIKE "%${shopCondition.shopName}%"
             </if>
             <if test="shopCondition.enableStatus!=null">
-                and s.enable_status = #{shopCondition.enable_status}
+                and s.enable_status = #{shopCondition.enableStatus}
             </if>
             <if test="shopCondition.owner!=null and shopCondition.owner.userId!=null">
                 and s.owner_id=#{shopCondition.owner.userId}
@@ -130,6 +133,9 @@
             <if test="shopCondition.shopCategory!=null and shopCondition.shopCategory.shopCategoryId!=null">
                 and s.shop_category_id=#{shopCondition.shopCategory.shopCategoryId}
             </if>
+            <if test="shopCondition.shopCategory!=null and shopCondition.shopCategory.parent!=null and shopCondition.shopCategory.shopCategoryId!=null">
+                AND s.shop_category_id IN (SELECT shop_category_id FROM tb_shop_category WHERE parent_id=#{shopCondition.shopCategory.parent.shopCategoryId})
+            </if>
             <if test="shopCondition.area!=null and shopCondition.area.areaId!=null">
                 and s.area_id=#{shopCondition.area.areaId}
             </if>
@@ -137,7 +143,7 @@
                 and s.shop_name LIKE "%${shopCondition.shopName}%"
             </if>
             <if test="shopCondition.enableStatus!=null">
-                and s.enable_status = #{shopCondition.enable_status}
+                and s.enable_status = #{shopCondition.enableStatus}
             </if>
             <if test="shopCondition.owner!=null and shopCondition.owner.userId!=null">
                 and s.owner_id=#{shopCondition.owner.userId}
