@@ -66,12 +66,15 @@ $(function() {
         var url = listUrl + '?' + 'pageIndex=' + pageIndex + '&pageSize='
             + pageSize + '&parentId=' + parentId + '&areaId=' + areaId
             + '&shopCategoryId=' + shopCategoryId + '&shopName=' + shopName;
-        // 避免重复访问
+        // 设定加载符，若还在后台取数据则不能再次访问后台，避免多次重复加载
         loading = true;
+        //访问后台获取相应查询条件下的商品列表
         $.getJSON(url, function(data) {
             if (data.success) {
+                //获取当前查询条件下的商品的总数
                 maxItems = data.count;
                 var html = '';
+                //遍历商品列表，拼接出卡片集合
                 data.shopList.map(function(item, index) {
                     html += '' + '<div class="card" data-shop-id="'
                         + item.shopId + '">' + '<div class="card-header">'

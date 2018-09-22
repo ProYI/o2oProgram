@@ -40,19 +40,31 @@ public class FrontendController {
 
     /**
      * 首页路由
+     *
      * @return:
      */
     @RequestMapping(value = "/index")
-    private String index(){
+    private String index() {
         return "frontend/index";
     }
 
     /**
-    * 商品列表路由
-    * @return:
-    */
+     * 商品列表路由
+     *
+     * @return:
+     */
     @RequestMapping(value = "/shoplist")
     private String showShopList() {
         return "frontend/shoplist";
+    }
+
+    /**
+     * 店铺详情页路由
+     *
+     * @return:
+     */
+    @RequestMapping(value = "/shopdetail")
+    private String showShopDetail() {
+        return "frontend/shopdetail";
     }
 }
