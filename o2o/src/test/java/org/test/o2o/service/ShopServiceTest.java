@@ -114,6 +114,7 @@ public class ShopServiceTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testGetShopList() {
         Shop shopCondition = new Shop();
         ShopCategory shopCategory = new ShopCategory();

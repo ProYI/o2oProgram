@@ -104,6 +104,7 @@ public class ProductDaoTest extends BaseTest{
     }
 
     @Test
+    @Ignore
     public void testBQueryProductList() throws Exception {
         Product product = new Product();
         //分页查询,预期返回三条结果

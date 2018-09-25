@@ -15,6 +15,7 @@ package org.test.o2o.dao;
 
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.test.o2o.BaseTest;
@@ -43,6 +44,7 @@ public class HeadLineDaoTest extends BaseTest {
     private HeadLineDao headLineDao;
 
     @Test
+    @Ignore
     public void testQueryArea() {
         List<HeadLine> headLineList = headLineDao.queryHeadLine(new HeadLine());
         Assert.assertEquals(1,headLineList.size());

@@ -14,6 +14,7 @@
 package org.test.o2o.service;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.test.o2o.BaseTest;
@@ -44,6 +45,7 @@ public class AreaServiceTest extends BaseTest{
     @Autowired
     private AreaService areaService;
     @Test
+    @Ignore
     public void testGetAreaList() {
         List<Area> areaList = areaService.getAreaList();
         assertEquals("西院", areaList.get(0).getAreaName());

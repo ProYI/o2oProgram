@@ -14,6 +14,7 @@
 package org.test.o2o.dao;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,7 @@ public class AreaDaoTest extends BaseTest{
     private AreaDao areaDao;
 
     @Test
+    @Ignore
     public void testQueryArea() {
         List<Area> areaList = areaDao.queryArea();
         assertEquals(2, areaList.size());
