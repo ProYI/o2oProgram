@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.test.o2o.dto.UserAccessToken;
 import org.test.o2o.dto.WechatUser;
+import org.test.o2o.entity.PersonInfo;
+import org.test.o2o.entity.WechatAuth;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -32,19 +34,7 @@ import java.net.URL;
 import java.security.SecureRandom;
 
 /**
-
- * 〈功能简述〉<br>
-
  * 〈微信工具类〉
-
- *
-
- * @author Administrator
-
- * @create 2018-09-22
-
- * @since 1.0.0
-
  */
 
 public class WechatUtil {
@@ -58,11 +48,10 @@ public class WechatUtil {
      * @throws IOException
      */
     public static UserAccessToken getUserAccessToken(String code) throws IOException {
-        // TODO 替换成申请的微信测试号信息里的appId
-        String appId = "微信测试号appId";
+        String appId = "----------------";
         log.debug("appId:" + appId);
         // 测试号信息里的appsecret
-        String appsecret = "微信测试号appsecret";
+        String appsecret = "------------";
         log.debug("secret:" + appsecret);
         // 根据传入的code,拼接出访问微信定义好的接口的URL
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appId + "&secret=" + appsecret
@@ -191,5 +180,19 @@ public class WechatUtil {
             log.error("https request error:{}", e);
         }
         return buffer.toString();
+    }
+
+    /**
+    * 将WechatUser里的信息转换成PersonInfo的信息并返回PersonInfo实体类
+    * @param: user
+    * @return:
+    */
+    public static PersonInfo getPersonInfoFromRequest(WechatUser user) {
+        PersonInfo personInfo = new PersonInfo();
+        personInfo.setName(user.getNickName());
+        personInfo.setGender(user.getSex() + "");
+        personInfo.setProfileImg(user.getHeadimgurl());
+        personInfo.setEnableStatus(1);
+        return personInfo;
     }
 }

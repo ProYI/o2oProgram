@@ -38,7 +38,7 @@ public class PersonInfo {
     private String profileImg;
     private String email;
     private String gender;
-    private String enableStatus;
+    private Integer enableStatus;
     private Integer userType; //1.顾客 2.店家 3.超级管理员
     private Date createTime;
     private Date lastEditTime;
@@ -83,11 +83,11 @@ public class PersonInfo {
         this.gender = gender;
     }
 
-    public String getEnableStatus() {
+    public Integer getEnableStatus() {
         return enableStatus;
     }
 
-    public void setEnableStatus(String enableStatus) {
+    public void setEnableStatus(Integer enableStatus) {
         this.enableStatus = enableStatus;
     }
 

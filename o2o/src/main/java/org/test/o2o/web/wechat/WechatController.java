@@ -27,19 +27,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
-
- * 〈功能简述〉<br>
-
  * 〈微信请求转发路由〉
-
- *
-
- * @author Administrator
-
- * @create 2018-09-22
-
- * @since 1.0.0
-
  */
 @Controller
 @RequestMapping("/wechat")
