@@ -1,6 +1,6 @@
 /**
  * Copyright (C), 2015-2018, XXX有限公司
- * FileName: LoaclAuth
+ * FileName: LocalAuth
  * Author: Administrator
  * Date: 2018-09-07 15:33
  * Description: 本地
@@ -17,22 +17,10 @@ package org.test.o2o.entity;
 import java.util.Date;
 
 /**
-
- * 〈功能简述〉<br>
-
- * 〈本地〉
-
- *
-
- * @author Administrator
-
- * @create 2018-09-07
-
- * @since 1.0.0
-
+ * 〈本地账户〉
  */
 
-public class LoaclAuth {
+public class LocalAuth {
     private Long localAuthId;
     private String username;
     private String password;
