@@ -33,13 +33,13 @@ public class JedisPoolWriper {
         }
     }
 
-    public JedisPoolWriper(final JedisPoolConfig poolConfig, final String host,final int port,final int timeout,final String auth) {
-        try {
-            jedisPool = new JedisPool(poolConfig, host, port,timeout,auth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    //public JedisPoolWriper(final JedisPoolConfig poolConfig, final String host,final int port,final int timeout,final String auth) {
+    //    try {
+    //        jedisPool = new JedisPool(poolConfig, host, port,timeout,auth);
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //    }
+    //}
 
     /**
      * 获取Redis连接池对象

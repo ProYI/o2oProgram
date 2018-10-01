@@ -27,7 +27,7 @@ $(function () {
                 $("#shop-phone").val(shop.phone);
                 $("#shop-desc").val(shop.shopDesc);
 
-                var shopCategory = "<option data-id='" + shop.shopCategory.shopCategoryId + "' selected>" + shop.shopCategory.shopCategoryName + "</option>>";
+                var shopCategory = "<option data-id='" + shop.shopCategory.shopCategoryId + "' selected>" + shop.shopCategory.shopCategoryName + "</option>";
                 var tempAreaHtml;
                 data.areaList.map(function (item, index) {
                     tempAreaHtml += "<option data-id='" + item.areaId + "'>" + item.areaName + "</option>"
@@ -48,7 +48,7 @@ $(function () {
                 var tempHtml = "";
                 var tempAreaHtml = "";
                 data.shopCategoryList.map(function (item, index) {
-                    tempHtml += "<option data-id='" + item.shopCategoryId + "'>" +item.shopCategoryName + "</option>>"
+                    tempHtml += "<option data-id='" + item.shopCategoryId + "'>" +item.shopCategoryName + "</option>"
                 });
                 data.areaList.map(function (item, index) {
                     tempAreaHtml += "<option data-id='" + item.areaId + "'>" + item.areaName + "</option>"
@@ -108,4 +108,4 @@ $(function () {
            }
        });
     });
-})
+});

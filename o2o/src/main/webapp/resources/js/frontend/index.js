@@ -11,8 +11,8 @@ $(function() {
             headLineList.map(function (item, index) {
                 swiperHtml += ''
                     + '<div class="swiper-slide img-wrap">'
-                    +  '<a href="'+item.lineLink
-                    +  '" external><img class="banner-img" src="\\o2o\\resources\\image\\'+ item.lineImg +'" alt="'+ item.lineName +'"></a>'
+                    + '<a href="'+item.lineLink
+                    + '" external></a><img class="banner-img" src="\\o2o\\resources\\image\\'+ item.lineImg +'" alt="'+ item.lineName +'"/>'
                     + '</div>';
             });
             //将轮播图组赋值给前端HTML控件
@@ -35,7 +35,7 @@ $(function() {
                     +          '<p class="shop-desc">'+ item.shopCategoryDesc +'</p>'
                     +      '</div>'
                     +      '<div class="shop-classify-img-warp">'
-                    +          '<img class="shop-img" src="\\o2o\\resources\\image\\'+ item.shopCategoryImg +'">'
+                    +          '<img class="shop-img" src="\\o2o\\resources\\image'+ item.shopCategoryImg +'">'
                     +      '</div>'
                     +  '</div>';
             });
