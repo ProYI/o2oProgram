@@ -14,7 +14,7 @@ Linux版本：CentOS 7  SSH连接工具SecureCRT
 demo演示  
 1.  关注测试版公众号  
 ![公众号](测试号.png)  
-2.  在微信客户端访问[https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6fc211b53bb339e3&redirect_uri=http://www.yuyingtaopc.top/o2o/wechatlogin/logincheck&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect]
+2.  在微信客户端访问[https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6fc211b53bb339e3&redirect_uri=http://www.yuyingtaopc.top/o2o/wechatlogin/logincheck&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect]  
 ![demo](demo.png)
 
 学习到现在出现了很多问题，有时候一个小问题能卡一两天，有条件就Google，没条件百度也能找到答案，基本在CSDN都有前辈踩过坑。  
